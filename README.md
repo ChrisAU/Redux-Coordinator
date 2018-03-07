@@ -1,5 +1,7 @@
 # Redux-Coordinator
 
+# Business Logic
+
 ## Action
 
 `Actions` describe a change to the `State` they may contain additional information in order to make this change such as results from an API.

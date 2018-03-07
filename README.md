@@ -1,8 +1,8 @@
 # Redux-Coordinator
 
-# Business Logic
+## Business Logic
 
-## Action
+### Action
 
 `Actions` describe a change to the `State` they may contain additional information in order to make this change such as results from an API.
 
@@ -29,7 +29,7 @@ enum LoadAction<T>: ActionType {
 typealias FetchAction = LoadAction<Posts>
 ```
 
-## ActionCreator
+### ActionCreator
 
 `Action Creators` are exactly that — functions that create `Actions`. It's easy to conflate the terms "action" and "action creator", so do your best to use the proper term.
 
@@ -60,7 +60,7 @@ func toggleSwitch(_ on: Bool) -> ActionType {
 
 NOTE: `Action Creators` should be used in all cases where something is dispatched to the `Store` from the `Coordinator`.
 
-## Reducer
+### Reducer
 
 `Reducers` are *pure* functions, they produce no side-effects and will always return the same output for a given input.
 
@@ -86,11 +86,11 @@ struct CountState: StateType {
 }
 ```
 
-## Middleware
+### Middleware
 
 The `Middleware` provides a third-party extension point between dispatching an `Action`, and the moment it reaches the `Reducer`. People use Redux middleware for logging, crash reporting, talking to an asynchronous API, routing, and more.
 
-## State
+### State
 
 The `State` is a representation of state for a given context. The context could be the application, a screen, a route, and many more.
 
@@ -98,7 +98,7 @@ The `State` object is immutable, it is a representation of the _current_ state.
 
 In Redux there is only one application `State`. However, inside that object there might be other `SubState` objects that are updated by `Reducers`.
 
-## Store
+### Store
 
 The `Store` is responsible for dispatching `Actions` to the `Middlewares` and main `Reducer` to mutate the `State`.
 
@@ -115,25 +115,25 @@ store.observe(\.counter).subscribe { newCount in
 }
 ```
 
-# UI
+## UI
 
-## Coordinator
+### Coordinator
 
 Responsible for navigation, calling the `Renderer` when `State` changes, and receiving `Actions` from the `View`.
 
 `Actions` may be perform routing here to achieve deep linking (`RouteAction`).
 
-## Renderer
+### Renderer
 
 Responsible for rendering the `ViewState` on the `View`. 
 
 This is typically done with an extension on the `ViewController`.
 
-## ViewState
+### ViewState
 
 In order to present something meaningful in the `View` we need to map the `State` into something more consumable. An example of this would be turning a raw number (e.g. `10`) into a piece of text like `Seconds elapsed: 10`.
 
-## View
+### View
 
 The `ViewController` should be split into three parts to clearly compartmentalise the parts into:
 - VC (Triggers `Actions`, holds `viewDidLoad` logic which may call `Layout` code)

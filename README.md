@@ -10,16 +10,7 @@
 
 **Note:** In Swift, enums are perfectly suited for defining similar `Actions`.
 
-```
-enum FetchAction: ActionType {
-    case started
-    case success(Posts)
-    case failure(Error)
-}
-```
-
-Combined with generics you may be able to get away with just typealiases in many scenarios.
-
+Example:
 ```
 enum LoadAction<T>: ActionType {
     case started
@@ -35,10 +26,10 @@ typealias FetchAction = LoadAction<Posts>
 
 Asynchronous `ActionCreator`'s can return an initial `Action` (such as loading) followed by other `Actions` as the asynchronous task progresses this can help you notify the user of a percentage of completion, a successful result, and an error.
 
-Consider this _asynchronous_ action creator, it returns a result immediately, followed by another one after the API responds:
+Consider this _asynchronous_ `Action Creator`, which also triggers a synchronous `Action` immediately, followed by another one after the API responds:
 
 ```
-func fetchPosts(from url: URL) -> ActionType {
+func fetchPosts(from url: URL) {
     api.fetch(url, method: .GET) { response, error in
         if let error = error {
             store.dispatch(FetchAction.failure(error))
@@ -46,19 +37,17 @@ func fetchPosts(from url: URL) -> ActionType {
             store.dispatch(FetchAction.success(Posts.parse(response))
         }
     }
-    return FetchAction.started
+    store.dispatch(FetchAction.started)
 }
 ```
 
 Alternatively, _synchronous_ action creators would likely trigger either action A or B depending on state:
 
 ```
-func toggleSwitch(_ on: Bool) -> ActionType {
-    return on ? SwitchAction.off : SwitchAction.on
+func toggleSwitch(_ on: Bool) {
+    store.dispatch(on ? SwitchAction.off : SwitchAction.on)
 }
 ```
-
-NOTE: `Action Creators` should be used in all cases where something is dispatched to the `Store` from the `Coordinator`.
 
 ### Reducer
 

@@ -1,5 +1,7 @@
 # Redux-Coordinator
 
+![Redux+Coordinator](https://github.com/ChrisAU/Redux-Coordinator/blob/master/Redux%2BCoordinator.jpg "Redux+Coordinator")
+
 ## Business Logic
 
 ### Action
@@ -77,7 +79,7 @@ struct CountState: StateType {
 
 ### Middleware
 
-The `Middleware` provides a third-party extension point between dispatching an `Action`, and the moment it reaches the `Reducer`. People use Redux middleware for logging, crash reporting, talking to an asynchronous API, routing, and more.
+The `Middleware` provides a third-party extension point before an `Action` is sent to a `Reducer` and after the `Action` has updated the `State`. People use Redux middleware for logging, crash reporting, storage, and more.
 
 ### State
 
@@ -86,6 +88,17 @@ The `State` is a representation of state for a given context. The context could 
 The `State` object is immutable, it is a representation of the _current_ state.
 
 In Redux there is only one application `State`. However, inside that object there might be other `SubState` objects that are updated by `Reducers`.
+
+```
+struct AppState: StateType {
+    var countState: CountState = .init()
+    var someOtherState: SomeOtherState = .init()
+
+    mutating func reduce(_ action: ActionType) {
+        countState.reduce(action)
+        someOtherState.reduce(action)
+    }
+}
 
 ### Store
 
@@ -127,4 +140,4 @@ In order to present something meaningful in the `View` we need to map the `State
 The `ViewController` should be split into three parts to clearly compartmentalise the parts into:
 - VC (Triggers `Actions`, holds `viewDidLoad` logic which may call `Layout` code)
 - VC+Layout (Handles Constraint Changes)
-- VC+Renderer (Handles `ViewState` Changes)
+- VC+Renderer (Handles `ViewState` Changes - see `Renderer` above)

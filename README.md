@@ -99,6 +99,7 @@ struct AppState: StateType {
         someOtherState.reduce(action)
     }
 }
+```
 
 ### Store
 
@@ -125,19 +126,17 @@ Responsible for navigation, calling the `Renderer` when `State` changes, and rec
 
 `Actions` may be perform routing here to achieve deep linking (`RouteAction`).
 
-### Renderer
-
-Responsible for rendering the `ViewState` on the `View`. 
-
-This is typically done with an extension on the `ViewController`.
-
-### ViewState
-
-In order to present something meaningful in the `View` we need to map the `State` into something more consumable. An example of this would be turning a raw number (e.g. `10`) into a piece of text like `Seconds elapsed: 10`.
-
-### View
+### ViewController
 
 The `ViewController` should be split into three parts to clearly compartmentalise the parts into:
 - VC (Triggers `Actions`, holds `viewDidLoad` logic which may call `Layout` code)
 - VC+Layout (Handles Constraint Changes)
-- VC+Renderer (Handles `ViewState` Changes - see `Renderer` above)
+- VC+Renderer (Passes `ViewState` Changes to appropriate `Views`)
+
+### View/Renderer
+
+Responsible for rendering the `ViewState`. 
+
+### ViewState
+
+In order to present something meaningful in the `View` we need to map the `State` into something more consumable. An example of this would be turning a raw number (e.g. `10`) into a piece of text like `Seconds elapsed: 10`.

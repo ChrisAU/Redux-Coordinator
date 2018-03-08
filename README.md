@@ -129,9 +129,9 @@ Responsible for navigation, calling the `Renderer` when `State` changes, and rec
 ### ViewController
 
 The `ViewController` should be split into three parts to clearly compartmentalise the parts into:
-- VC (Triggers `Actions`, holds `viewDidLoad` logic which may call `Layout` code)
-- VC+Layout (Handles Constraint Changes)
-- VC+Renderer (Passes `ViewState` Changes to appropriate `Views`)
+- VC (Triggers `Action Creators` in `Coordinator`, holds `viewDidLoad` logic which may call `Layout` code)
+- VC+Layout (Handles constraint changes - concerned with _where_ to present things)
+- VC+Renderer (Passes `ViewState` changes to appropriate `Views` - concerned with _what_ to present)
 
 ### View/Renderer
 
